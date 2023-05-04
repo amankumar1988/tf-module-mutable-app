@@ -27,3 +27,12 @@ data "aws_ami" "ami" {
 
 }
 
+# Fetches the secret from secret Manager
+
+data "aws_secretsmanager_secret" "secrets" {
+  name = "roboshop/secrets"
+}
+
+data "aws_secretsmanager_secret_version" "secrets" {
+  secret_id     = data.aws_secretsmanager_secret.secrets.id
+}
