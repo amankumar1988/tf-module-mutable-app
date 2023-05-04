@@ -8,7 +8,7 @@ resource "aws_spot_instance_request" "spot" {
   subnet_id                 = element(data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS,count.index)
 
   tags = {
-    Name = "${var.COMPONENT}-${var.ENV}-spot"
+    Name = "${var.COMPONENT}-${var.ENV}"
   }
 }
 
@@ -21,6 +21,15 @@ resource "aws_instance" "od" {
   vpc_security_group_ids    = [aws_security_group.allow_app.id]
   subnet_id                 = element(data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNET_IDS,count.index)
   tags = {
-    Name = "${var.COMPONENT}-${var.ENV}-od"
+    Name = "${var.COMPONENT}-${var.ENV}"    # This tag is for the spot request and not for the spot servers.
   }
+}
+
+# Create Tags
+
+resource "aws_ec2_tag" "ec2_tags" {
+  count         =  var.OD_INSTANCE_COUNT + var.SPOT_INSTANCE_COUNT
+  resource_id   =  local.INSTANCT_IDS
+  key           =  "Name"
+  value         =  "${var.COMPONENT}-${var.ENV}"
 }
