@@ -1,4 +1,4 @@
-resource "null_resource" {
+resource "null_resource" "app" {
     count                     = var.SPOT_INSTANCE_COUNT + var.OD_INSTANCE_COUNT
 # Declaring the remote provisioner inside the resource
     provisioner "remote-exec" {
