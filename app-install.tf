@@ -10,7 +10,7 @@ resource "null_resource" "app" {
     }
 
       inline = [
-        "ansible-pull -U https://github.com/amankumar1988/ansible.git robot-pull.yaml -e ENV=dev -e COMPONENT=${var.COMPONENT} -e VERSION=${var.APP_VERSION}"
+        "ansible-pull -U https://github.com/amankumar1988/ansible.git robot-pull.yaml -e ENV=dev -e COMPONENT=${var.COMPONENT} -e APP_VERSION=${var.APP_VERSION}"
       ]
     }
 }
